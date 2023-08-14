@@ -12,6 +12,7 @@
   entrypoint,
   importMap ? null,
   additionalDenoFlags ? "",
+  additionalBuildSteps ? "",
 }: let
   inherit (deno2nix.internal) mkDepsLink;
 in
@@ -41,5 +42,6 @@ in
     installPhase = ''
       mkdir -p $out/bin
       cp "${output}" "$out/bin/"
+      ${additionalBuildSteps}
     '';
   }
