@@ -23,9 +23,12 @@ in
     buildInputs = with pkgs; [deno jq];
     buildPhase = ''
       export DENO_DIR="/tmp/deno2nix"
+      rm -rf $DENO_DIR
       mkdir -p $DENO_DIR
+      echo Linking dependencies
       ln -s "${mkDepsLink lockfile}" $(deno info --json | jq -r .modulesCache)
 
+      echo Compiling
       deno compile \
         --lock="${lockfile}" \
         --output="${output}" \
