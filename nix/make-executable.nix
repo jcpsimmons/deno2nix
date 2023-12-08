@@ -13,6 +13,7 @@
   importMap ? null,
   additionalDenoFlags ? "",
   additionalBuildSteps ? "",
+  preCompileSteps ? "",
 }: let
   inherit (deno2nix.internal) mkDepsLink;
 in
@@ -27,6 +28,8 @@ in
       mkdir -p $DENO_DIR
       echo Linking dependencies
       ln -s "${mkDepsLink lockfile}" $(deno info --json | jq -r .modulesCache)
+
+      ${preCompileSteps}
 
       echo Compiling
       deno compile \
