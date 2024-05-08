@@ -21,7 +21,7 @@ in
     inherit pname version src;
     dontFixup = true;
 
-    buildInputs = with pkgs; [deno jq];
+    buildInputs = with pkgs; [deno jq unzip];
     buildPhase = ''
       export DENO_DIR="/tmp/deno2nix"
       rm -rf $DENO_DIR
